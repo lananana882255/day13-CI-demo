@@ -1,8 +1,6 @@
 package com.example.TodoManager;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Setter
@@ -15,6 +13,7 @@ import lombok.*;
 @Table(name = "todolist")
 public class Todo {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String text;
     private boolean done;

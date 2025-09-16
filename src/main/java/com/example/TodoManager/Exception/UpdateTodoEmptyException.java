@@ -1,4 +1,4 @@
-package com.example.TodoManager.Service;
+package com.example.TodoManager.Exception;
 
 public class UpdateTodoEmptyException extends RuntimeException {
     public UpdateTodoEmptyException(String message) {

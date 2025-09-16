@@ -11,8 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -53,7 +52,7 @@ public class TodoListControllerTest {
 
 
     @Test
-    public void should_return_404_when_get_given_an_invalid_id() throws Exception {
+    public void should_return_404_when_get_given_an_invalid_id(){
     }
 
     @Test
@@ -125,5 +124,73 @@ public class TodoListControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.text").value("Buy milk"))
                 .andExpect(jsonPath("$.done").value(false));
+    }
+
+    @Test
+    public void should_return_update_todo_when_put_given_a_valid_id() throws Exception {
+        Todo todo=new Todo();
+        todo.setText("Buy snacks");
+        todo.setDone(true);
+        long id=todoListRepository.save(todo).getId();
+        String todoJson = """
+                {
+                    "id":123,
+                    "text": "Buy milk",
+                    "done" : false
+                }
+                """;
+        mockMvc.perform(put("/todos/"+id).contentType(APPLICATION_JSON)
+                        .content(todoJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.text").value("Buy milk"))
+                .andExpect(jsonPath("$.done").value(false));
+    }
+
+    @Test
+    public void should_return_update_todo_when_put_given_id_and_update_todo_with_different_id() throws Exception {
+        Todo todo=new Todo();
+        todo.setText("Buy snacks");
+        todo.setDone(true);
+        long id=todoListRepository.save(todo).getId();
+        String todoJson = """
+                {
+                    "id":456,
+                    "text": "Buy milk",
+                    "done" : false
+                }
+                """;
+        mockMvc.perform(put("/todos/"+id).contentType(APPLICATION_JSON)
+                        .content(todoJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.text").value("Buy milk"))
+                .andExpect(jsonPath("$.done").value(false));
+    }
+
+    @Test
+    public void should_return_404_when_put_given_an_invalid_id() throws Exception {
+        String todoJson = """
+                {
+                    "id":456,
+                    "text": "Buy milk",
+                    "done" : false
+                }
+                """;
+        mockMvc.perform(put("/todos/"+9999).contentType(APPLICATION_JSON)
+                        .content(todoJson))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void should_return_422_when_put_given_an_empty_update_todo() throws Exception {
+        Todo todo1 = new Todo();
+        todo1.setText("Buy milk");
+        long id=todoListRepository.save(todo1).getId();
+        String todoJson = """
+                {
+                }
+                """;
+        mockMvc.perform(put("/todos/"+id).contentType(APPLICATION_JSON)
+                        .content(todoJson))
+                .andExpect(status().isUnprocessableEntity());
     }
 }

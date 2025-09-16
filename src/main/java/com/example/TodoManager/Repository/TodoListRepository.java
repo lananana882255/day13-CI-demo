@@ -4,6 +4,7 @@ import com.example.TodoManager.Todo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TodoListRepository {
@@ -13,5 +14,7 @@ public interface TodoListRepository {
 
     List<Todo> findAll();
 
-    Todo findTodo(long id);
+    Optional<Todo> findTodo(long id);
+
+    Todo update(Todo todo);
 }

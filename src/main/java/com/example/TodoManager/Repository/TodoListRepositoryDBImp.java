@@ -1,7 +1,6 @@
 package com.example.TodoManager.Repository;
 
 import com.example.TodoManager.Todo;
-import com.example.TodoManager.Exception.TodoNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -29,12 +28,13 @@ public class TodoListRepositoryDBImp implements TodoListRepository {
     }
 
     @Override
-    public Todo findTodo(long id) {
-        Optional<Todo> addTodo=todoListJPARepository.findById(id);
-        if(addTodo.isEmpty()){
-            throw new TodoNotFoundException("Todo not found.");
-        }
-        return addTodo.get();
+    public Optional<Todo> findTodo(long id) {
+        return todoListJPARepository.findById(id);
+    }
+
+    @Override
+    public Todo update(Todo todo) {
+        return todoListJPARepository.save(todo);
     }
 
 }

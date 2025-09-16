@@ -3,6 +3,7 @@ package com.example.TodoManager.Controller;
 import com.example.TodoManager.Exception.TodoAlreadyExistedException;
 import com.example.TodoManager.Exception.TodoNotCreatedWithEmptyException;
 import com.example.TodoManager.Exception.TodoNotFoundException;
+import com.example.TodoManager.Exception.UpdateTodoEmptyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -27,6 +28,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(TodoAlreadyExistedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleTodoAlreadyExistedException(Exception e) {
+        return e.getMessage();
+    }
+
+    @ExceptionHandler(UpdateTodoEmptyException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public String handleUpdateTodoEmptyException(Exception e) {
         return e.getMessage();
     }
 }
