@@ -193,4 +193,20 @@ public class TodoListControllerTest {
                         .content(todoJson))
                 .andExpect(status().isUnprocessableEntity());
     }
+
+    @Test
+    public void should_return_204_when_delete_given_valid_id() throws Exception {
+        Todo todo1 = new Todo();
+        todo1.setText("Buy milk");
+        long id=todoListRepository.save(todo1).getId();
+        mockMvc.perform(delete("/todos/"+id).contentType(APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void should_return_404_when_delete_given_invalid_id() throws Exception {
+
+        mockMvc.perform(delete("/todos/"+9999).contentType(APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
 }

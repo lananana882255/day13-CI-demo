@@ -37,4 +37,9 @@ public class TodoListRepositoryDBImp implements TodoListRepository {
         return todoListJPARepository.save(todo);
     }
 
+    @Override
+    public void deleteTodo(long id) {
+        todoListJPARepository.deleteById(id);
+    }
+
 }

@@ -57,4 +57,9 @@ public class TodoListService {
         todo.setDone(updateTodo.isDone());
         return todoListRepository.update(todo);
     }
+
+    public void deleteTodo(long id) {
+        getTodo(id);
+        todoListRepository.deleteTodo(id);
+    }
 }

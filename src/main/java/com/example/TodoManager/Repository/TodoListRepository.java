@@ -17,4 +17,6 @@ public interface TodoListRepository {
     Optional<Todo> findTodo(long id);
 
     Todo update(Todo todo);
+
+    void deleteTodo(long id);
 }

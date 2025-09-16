@@ -33,4 +33,10 @@ public class TodoListController {
     public ResponseEntity<Todo> updateTodo(@PathVariable long id,@RequestBody TodoReq updateTodo){
         return ResponseEntity.ok(todoListService.updateTodo(id,updateTodo));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTodo(@PathVariable long id){
+        todoListService.deleteTodo(id);
+        return ResponseEntity.noContent().build();
+    }
 }
