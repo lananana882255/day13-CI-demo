@@ -1,8 +1,8 @@
 package com.example.TodoManager.ContollerTest;
 
 import com.example.TodoManager.Todo;
-import com.example.TodoManager.TodoListController;
-import com.example.TodoManager.TodoListRepository;
+import com.example.TodoManager.Controller.TodoListController;
+import com.example.TodoManager.Repository.TodoListRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -26,7 +27,9 @@ public class TodoListControllerTest {
     private TodoListRepository todoListRepository;
 
     @BeforeEach
-    public void setUp(){ todoListController.clearTodos();}
+    public void setUp() {
+        todoListController.clearTodos();
+    }
 
     @Test
     public void should_return_empty_list_when_get_all_todos_given_none_extsited_todo() throws Exception {
@@ -37,12 +40,10 @@ public class TodoListControllerTest {
 
     @Test
     public void should_return_all_todos_when_get_all_todos_given_todos() throws Exception {
-        Todo todo1=new Todo();
+        Todo todo1 = new Todo();
         todo1.setText("todo1");
-        todo1.setDone(false);
-        Todo todo2=new Todo();
+        Todo todo2 = new Todo();
         todo2.setText("todo2");
-        todo2.setDone(false);
         todoListRepository.save(todo1);
         todoListRepository.save(todo2);
         mockMvc.perform(get("/todos").contentType(APPLICATION_JSON))
@@ -50,4 +51,79 @@ public class TodoListControllerTest {
                 .andExpect(jsonPath("$.length()").value(2));
     }
 
+
+    @Test
+    public void should_return_404_when_get_given_an_invalid_id() throws Exception {
+    }
+
+    @Test
+    public void should_return_201_when_post_given_a_valid_todo() throws Exception {
+        String todoJson = """
+                {
+                    "text": "Buy milk"
+                }
+                """;
+        mockMvc.perform(post("/todos").contentType(APPLICATION_JSON)
+                        .content(todoJson))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.text").value("Buy milk"))
+                .andExpect(jsonPath("$.done").value(false));
+    }
+
+
+    @Test
+    public void should_return_400_when_post_given_an_existed_todo() throws Exception {
+        String todoJson = """
+                {
+                    "text": "Buy milk"
+                }
+                """;
+        Todo todo1 = new Todo();
+        todo1.setText("Buy milk");
+        todoListRepository.save(todo1);
+        mockMvc.perform(post("/todos").contentType(APPLICATION_JSON)
+                        .content(todoJson))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void should_return_422_when_post_given_a_todo_with_empty_text() throws Exception {
+        String todoJson = """
+                {
+                    "text": "  ",
+                    "done" : false
+                }
+                """;
+        mockMvc.perform(post("/todos").contentType(APPLICATION_JSON)
+                        .content(todoJson))
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    public void should_return_422_when_post_given_a_todo_without_text() throws Exception {
+        String todoJson = """
+                {
+                    "done" : false
+                }
+                """;
+        mockMvc.perform(post("/todos").contentType(APPLICATION_JSON)
+                        .content(todoJson))
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    public void should_return_server_id_when_post_given_a_todo_with_id() throws Exception {
+        String todoJson = """
+                {
+                    "id":1323,
+                    "text": "Buy milk",
+                    "done" : false
+                }
+                """;
+        mockMvc.perform(post("/todos").contentType(APPLICATION_JSON)
+                        .content(todoJson))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.text").value("Buy milk"))
+                .andExpect(jsonPath("$.done").value(false));
+    }
 }
