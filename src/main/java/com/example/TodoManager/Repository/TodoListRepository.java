@@ -1,14 +1,17 @@
-package com.example.TodoManager;
+package com.example.TodoManager.Repository;
 
+import com.example.TodoManager.Todo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 public interface TodoListRepository {
-    void save(Todo todo);
+    Todo save(Todo todo);
 
     void clearTodos();
 
     List<Todo> findAll();
+
+    Todo findTodo(long id);
 }
