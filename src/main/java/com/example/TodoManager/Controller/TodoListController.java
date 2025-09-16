@@ -29,6 +29,11 @@ public class TodoListController {
         return ResponseEntity.status(HttpStatus.CREATED).body(todoListService.addTodo(todo));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Todo> getTodo(@PathVariable long id){
+        return ResponseEntity.ok(todoListService.getTodo(id));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Todo> updateTodo(@PathVariable long id,@RequestBody TodoReq updateTodo){
         return ResponseEntity.ok(todoListService.updateTodo(id,updateTodo));
