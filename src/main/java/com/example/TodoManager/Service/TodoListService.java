@@ -50,7 +50,7 @@ public class TodoListService {
 
     public Todo updateTodo(long id, TodoReq updateTodo) {
         Todo todo = getTodo(id);
-        if (updateTodo.getId()==0 &&updateTodo.getText()==null&&!updateTodo.isDone()) {
+        if (updateTodo.getId() == 0 && updateTodo.getText() == null && !updateTodo.isDone()) {
             throw new UpdateTodoEmptyException("Update information is empty.");
         }
         todo.setText(updateTodo.getText());

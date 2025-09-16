@@ -1,7 +1,7 @@
 package com.example.TodoManager.Controller;
 
-import com.example.TodoManager.Todo;
 import com.example.TodoManager.Service.TodoListService;
+import com.example.TodoManager.Todo;
 import com.example.TodoManager.TodoReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +15,7 @@ import java.util.List;
 public class TodoListController {
     @Autowired
     private TodoListService todoListService;
+
     public void clearTodos() {
         todoListService.clearTodos();
     }
@@ -30,17 +31,17 @@ public class TodoListController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Todo> getTodo(@PathVariable long id){
+    public ResponseEntity<Todo> getTodo(@PathVariable long id) {
         return ResponseEntity.ok(todoListService.getTodo(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Todo> updateTodo(@PathVariable long id,@RequestBody TodoReq updateTodo){
-        return ResponseEntity.ok(todoListService.updateTodo(id,updateTodo));
+    public ResponseEntity<Todo> updateTodo(@PathVariable long id, @RequestBody TodoReq updateTodo) {
+        return ResponseEntity.ok(todoListService.updateTodo(id, updateTodo));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTodo(@PathVariable long id){
+    public ResponseEntity<Void> deleteTodo(@PathVariable long id) {
         todoListService.deleteTodo(id);
         return ResponseEntity.noContent().build();
     }

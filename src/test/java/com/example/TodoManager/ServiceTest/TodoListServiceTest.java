@@ -3,9 +3,9 @@ package com.example.TodoManager.ServiceTest;
 import com.example.TodoManager.Exception.TodoAlreadyExistedException;
 import com.example.TodoManager.Exception.TodoNotCreatedWithEmptyException;
 import com.example.TodoManager.Exception.TodoNotFoundException;
+import com.example.TodoManager.Exception.UpdateTodoEmptyException;
 import com.example.TodoManager.Repository.TodoListRepository;
 import com.example.TodoManager.Service.TodoListService;
-import com.example.TodoManager.Exception.UpdateTodoEmptyException;
 import com.example.TodoManager.Todo;
 import com.example.TodoManager.TodoReq;
 import org.junit.jupiter.api.BeforeEach;
@@ -72,25 +72,25 @@ public class TodoListServiceTest {
     }
 
     @Test
-    public void should_return_TodoNotFoundException_when_put_given_an_invalid_id() throws Exception {
+    public void should_return_TodoNotFoundException_when_put_given_an_invalid_id() {
         TodoReq todo = new TodoReq();
         todo.setId(999);
         todo.setDone(false);
         todo.setText("buy milk");
-        assertThrows(TodoNotFoundException.class, () -> todoListService.updateTodo(999,todo));
+        assertThrows(TodoNotFoundException.class, () -> todoListService.updateTodo(999, todo));
         verify(todoListRepository, times(0)).update(any());
     }
 
     @Test
-    public void should_return_EmptyUpdateTodoException_when_put_given_an_empty_update_todo() throws Exception {
-        Todo todo= new Todo();
+    public void should_return_EmptyUpdateTodoException_when_put_given_an_empty_update_todo() {
+        Todo todo = new Todo();
         todo.setId(1);
         todo.setText("buy milk");
         todo.setDone(false);
-        TodoReq updateTodo=new TodoReq();
+        TodoReq updateTodo = new TodoReq();
         todoListRepository.save(todo);
         when(todoListRepository.findTodo(1)).thenReturn(Optional.of(todo));
-        assertThrows(UpdateTodoEmptyException.class, () -> todoListService.updateTodo(1,updateTodo));
+        assertThrows(UpdateTodoEmptyException.class, () -> todoListService.updateTodo(1, updateTodo));
         verify(todoListRepository, times(0)).update(any());
     }
 }

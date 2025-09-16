@@ -1,8 +1,8 @@
 package com.example.TodoManager.ContollerTest;
 
-import com.example.TodoManager.Todo;
 import com.example.TodoManager.Controller.TodoListController;
 import com.example.TodoManager.Repository.TodoListRepository;
+import com.example.TodoManager.Todo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +52,7 @@ public class TodoListControllerTest {
 
 
     @Test
-    public void should_return_404_when_get_given_an_invalid_id(){
+    public void should_return_404_when_get_given_an_invalid_id() {
     }
 
     @Test
@@ -128,10 +128,10 @@ public class TodoListControllerTest {
 
     @Test
     public void should_return_update_todo_when_put_given_a_valid_id() throws Exception {
-        Todo todo=new Todo();
+        Todo todo = new Todo();
         todo.setText("Buy snacks");
         todo.setDone(true);
-        long id=todoListRepository.save(todo).getId();
+        long id = todoListRepository.save(todo).getId();
         String todoJson = """
                 {
                     "id":123,
@@ -139,7 +139,7 @@ public class TodoListControllerTest {
                     "done" : false
                 }
                 """;
-        mockMvc.perform(put("/todos/"+id).contentType(APPLICATION_JSON)
+        mockMvc.perform(put("/todos/" + id).contentType(APPLICATION_JSON)
                         .content(todoJson))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.text").value("Buy milk"))
@@ -148,10 +148,10 @@ public class TodoListControllerTest {
 
     @Test
     public void should_return_update_todo_when_put_given_id_and_update_todo_with_different_id() throws Exception {
-        Todo todo=new Todo();
+        Todo todo = new Todo();
         todo.setText("Buy snacks");
         todo.setDone(true);
-        long id=todoListRepository.save(todo).getId();
+        long id = todoListRepository.save(todo).getId();
         String todoJson = """
                 {
                     "id":456,
@@ -159,7 +159,7 @@ public class TodoListControllerTest {
                     "done" : false
                 }
                 """;
-        mockMvc.perform(put("/todos/"+id).contentType(APPLICATION_JSON)
+        mockMvc.perform(put("/todos/" + id).contentType(APPLICATION_JSON)
                         .content(todoJson))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.text").value("Buy milk"))
@@ -175,7 +175,7 @@ public class TodoListControllerTest {
                     "done" : false
                 }
                 """;
-        mockMvc.perform(put("/todos/"+9999).contentType(APPLICATION_JSON)
+        mockMvc.perform(put("/todos/" + 9999).contentType(APPLICATION_JSON)
                         .content(todoJson))
                 .andExpect(status().isNotFound());
     }
@@ -184,12 +184,12 @@ public class TodoListControllerTest {
     public void should_return_422_when_put_given_an_empty_update_todo() throws Exception {
         Todo todo1 = new Todo();
         todo1.setText("Buy milk");
-        long id=todoListRepository.save(todo1).getId();
+        long id = todoListRepository.save(todo1).getId();
         String todoJson = """
                 {
                 }
                 """;
-        mockMvc.perform(put("/todos/"+id).contentType(APPLICATION_JSON)
+        mockMvc.perform(put("/todos/" + id).contentType(APPLICATION_JSON)
                         .content(todoJson))
                 .andExpect(status().isUnprocessableEntity());
     }
@@ -198,15 +198,15 @@ public class TodoListControllerTest {
     public void should_return_204_when_delete_given_valid_id() throws Exception {
         Todo todo1 = new Todo();
         todo1.setText("Buy milk");
-        long id=todoListRepository.save(todo1).getId();
-        mockMvc.perform(delete("/todos/"+id).contentType(APPLICATION_JSON))
+        long id = todoListRepository.save(todo1).getId();
+        mockMvc.perform(delete("/todos/" + id).contentType(APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     public void should_return_404_when_delete_given_invalid_id() throws Exception {
 
-        mockMvc.perform(delete("/todos/"+9999).contentType(APPLICATION_JSON))
+        mockMvc.perform(delete("/todos/" + 9999).contentType(APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 }
