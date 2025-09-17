@@ -26,9 +26,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Make gradlew executable
-        run: chmod +x gradlew
-
       - name: Cache Gradle packages
         uses: actions/cache@v4
         with:
