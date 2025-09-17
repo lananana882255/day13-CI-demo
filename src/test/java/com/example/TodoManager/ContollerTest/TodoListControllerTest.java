@@ -71,21 +71,6 @@ public class TodoListControllerTest {
 
 
     @Test
-    public void should_return_400_when_post_given_an_existed_todo() throws Exception {
-        String todoJson = """
-                {
-                    "text": "Buy milk"
-                }
-                """;
-        Todo todo1 = new Todo();
-        todo1.setText("Buy milk");
-        todoListRepository.save(todo1);
-        mockMvc.perform(post("/todos").contentType(APPLICATION_JSON)
-                        .content(todoJson))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
     public void should_return_422_when_post_given_a_todo_with_empty_text() throws Exception {
         String todoJson = """
                 {

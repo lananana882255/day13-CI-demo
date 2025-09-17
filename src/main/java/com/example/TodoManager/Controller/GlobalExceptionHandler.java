@@ -25,12 +25,6 @@ public class GlobalExceptionHandler {
         return e.getMessage();
     }
 
-    @ExceptionHandler(TodoAlreadyExistedException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleTodoAlreadyExistedException(Exception e) {
-        return e.getMessage();
-    }
-
     @ExceptionHandler(UpdateTodoEmptyException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public String handleUpdateTodoEmptyException(Exception e) {
