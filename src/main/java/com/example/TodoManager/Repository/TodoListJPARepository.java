@@ -1,6 +1,6 @@
 package com.example.TodoManager.Repository;
 
-import com.example.TodoManager.Todo;
+import com.example.TodoManager.Entity.Todo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TodoListJPARepository extends JpaRepository<Todo, Long> {

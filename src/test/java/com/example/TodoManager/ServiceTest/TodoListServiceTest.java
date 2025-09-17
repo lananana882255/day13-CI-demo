@@ -5,8 +5,8 @@ import com.example.TodoManager.Exception.TodoNotFoundException;
 import com.example.TodoManager.Exception.UpdateTodoEmptyException;
 import com.example.TodoManager.Repository.TodoListRepository;
 import com.example.TodoManager.Service.TodoListService;
-import com.example.TodoManager.Todo;
-import com.example.TodoManager.TodoReq;
+import com.example.TodoManager.Entity.Todo;
+import com.example.TodoManager.Entity.TodoReq;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +29,7 @@ public class TodoListServiceTest {
 
     @BeforeEach
     void setUp() {
-        todoListService.clearTodos();
+        todoListRepository.clearTodos();
     }
 
 

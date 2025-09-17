@@ -1,6 +1,6 @@
 package com.example.TodoManager.Repository;
 
-import com.example.TodoManager.Todo;
+import com.example.TodoManager.Entity.Todo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

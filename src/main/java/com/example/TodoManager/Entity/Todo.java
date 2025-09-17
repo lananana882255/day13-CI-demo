@@ -1,4 +1,4 @@
-package com.example.TodoManager;
+package com.example.TodoManager.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,5 +17,4 @@ public class Todo {
     private long id;
     private String text;
     private Boolean done;
-
 }

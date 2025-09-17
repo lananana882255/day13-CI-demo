@@ -4,8 +4,8 @@ import com.example.TodoManager.Exception.TodoNotCreatedWithEmptyException;
 import com.example.TodoManager.Exception.TodoNotFoundException;
 import com.example.TodoManager.Exception.UpdateTodoEmptyException;
 import com.example.TodoManager.Repository.TodoListRepository;
-import com.example.TodoManager.Todo;
-import com.example.TodoManager.TodoReq;
+import com.example.TodoManager.Entity.Todo;
+import com.example.TodoManager.Entity.TodoReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +16,6 @@ import java.util.Optional;
 public class TodoListService {
     @Autowired
     private TodoListRepository todoListRepository;
-
-    public void clearTodos() {
-        todoListRepository.clearTodos();
-    }
 
     public List<Todo> findAll() {
         return todoListRepository.findAll();

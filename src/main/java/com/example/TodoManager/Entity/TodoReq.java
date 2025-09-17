@@ -1,4 +1,4 @@
-package com.example.TodoManager;
+package com.example.TodoManager.Entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,5 +8,4 @@ import lombok.Setter;
 public class TodoReq {
     private String text;
     private boolean done;
-
 }

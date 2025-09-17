@@ -2,7 +2,7 @@ package com.example.TodoManager.ContollerTest;
 
 import com.example.TodoManager.Controller.TodoListController;
 import com.example.TodoManager.Repository.TodoListRepository;
-import com.example.TodoManager.Todo;
+import com.example.TodoManager.Entity.Todo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class TodoListControllerTest {
 
     @BeforeEach
     public void setUp() {
-        todoListController.clearTodos();
+        todoListRepository.clearTodos();
     }
 
     @Test

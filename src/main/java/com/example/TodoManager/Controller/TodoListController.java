@@ -1,8 +1,8 @@
 package com.example.TodoManager.Controller;
 
 import com.example.TodoManager.Service.TodoListService;
-import com.example.TodoManager.Todo;
-import com.example.TodoManager.TodoReq;
+import com.example.TodoManager.Entity.Todo;
+import com.example.TodoManager.Entity.TodoReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +15,6 @@ import java.util.List;
 public class TodoListController {
     @Autowired
     private TodoListService todoListService;
-
-    public void clearTodos() {
-        todoListService.clearTodos();
-    }
 
     @GetMapping
     public ResponseEntity<List<Todo>> findAll() {

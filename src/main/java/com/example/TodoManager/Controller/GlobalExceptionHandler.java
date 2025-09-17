@@ -1,6 +1,5 @@
 package com.example.TodoManager.Controller;
 
-import com.example.TodoManager.Exception.TodoAlreadyExistedException;
 import com.example.TodoManager.Exception.TodoNotCreatedWithEmptyException;
 import com.example.TodoManager.Exception.TodoNotFoundException;
 import com.example.TodoManager.Exception.UpdateTodoEmptyException;
